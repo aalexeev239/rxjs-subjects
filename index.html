@@ -87,7 +87,7 @@
 				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
 				<code>});</code>
 				<code>&nbsp;</code>
-			<code>const <mark>subscribtion</mark> = <mark>stream$</mark>.subscribe({</code>
+			<code>const <mark>subscribtion</mark> = stream$.subscribe({</code>
 				<code>    next: (v) => logger.textContent += ' ' + v,</code>
 				<code>    complete: () => logger.textContent += ' complete!'</code>
 				<code>});</code>
@@ -98,6 +98,7 @@
 <section class="slide">
 	<h2 class="slide-header">Observable</h2>
 	<div class="slide-description">
+		<p>Пример</p>
 		<div class="playground" id="step1"></div>
 		<p class="logger" style="margin-top: 10px"></p>
 		<button class="btn btn-play" onclick="run(step1, this)">▶</button>
@@ -248,6 +249,7 @@
 		<p>Ну и что?</p>
 		<p>Иногда надо <strong class="text-hot">подогреть</strong> <strong class="text-cold">холодный</strong>
 			Observable. Например, чтобы не делать 2 запроса:</p>
+		<br>
 	</div>
 	<div class="relative-container">
 		<small>
@@ -273,6 +275,7 @@
 		<p>Ну и что?</p>
 		<p>Иногда надо <strong class="text-hot">подогреть</strong> <strong class="text-cold">холодный</strong>
 			Observable. Например, чтобы не делать 2 запроса:</p>
+		<br>
 	</div>
 	<div class="relative-container">
 		<small>
@@ -956,9 +959,23 @@
 	<h2 class="shout">&nbsp;</h2>
 </section>
 
-<!-- 214iou3245iouy398y53495p49u5piuo4yipu5y341pui5h41piu3h5yipu314y5pi143h5ipu31-->
+<section class="slide">
+	<h2 class="slide-header">Примеры</h2>
+	<ol>
+		<li>unsubscribe</li>
+		<li class="next">share</li>
+		<li class="next">кеширование</li>
+		<li class="next">инкапсуляция сабджекта</li>
+		<li class="next">моки для юнит-тестов</li>
+	</ol>
+</section>
 
 <section class="slide">
+	<h2 class="shout">&nbsp;</h2>
+</section>
+<!-- 214iou3245iouy398y53495p49u5piuo4yipu5y341pui5h41piu3h5yipu314y5pi143h5ipu31-->
+
+<!-- <section class="slide">
 	<h2 class="slide-header">Пример</h2>
 	<div class="two-columns">
 		<div class="playground" id="step1"></div>
@@ -1198,6 +1215,7 @@
 		}
 	</style>
 </section>
+-->
 
 <footer class="badge">
 	<a href="https://github.com/shower/shower">Fork me on GitHub</a>
