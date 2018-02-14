@@ -7,7 +7,7 @@
 }
 
 .slide small {
-	margin-top: 20px;
+	margin-top: 10px;
 	display: block;
 	font-size: 14px;
 }
@@ -42,6 +42,10 @@
 
 .text-cold {
 	color: #4F81BD;
+}
+
+.text-muted {
+	color: #777;
 }
 
 .relative-container {
