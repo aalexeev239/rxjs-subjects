@@ -420,6 +420,282 @@
 	</div>
 </section>
 
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description big">
+		<p>Пример:</p>
+		<p>Я рассказываю этот доклад, я — Subject.</p>
+		<p>Произношу какую-то мысль — передаю значение через .next</p>
+		<p>Вы меня слушаете, вы подписчики. Вы получаете данные через subscribe().</p>
+	</div>
+	<small>
+		<pre>
+				<code>const aalexeev = new Subject();</code>
+				<code>&nbsp;</code>
+				<code>for (let i = 0; i < meetupListeners; i++) {</code>
+				<code>   meetupListeners[i] = aalexeev.subscribe(/* ... */);</code>
+				<code>}</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Я рассказываю этот доклад');</code>
+				<code>aalexeev.next('Произношу какую-то мысль — передаю значение через .next');</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description big">
+		<p>Если кто-то опоздал и пришел только сейчас, он не получит все прошлые значения.</p>
+		<p>Но будет получать все будущие.</p>
+	</div>
+	<small>
+		<pre>
+				<code>aalexeev.next('Если кто-то опоздал и пришел только сейчас');</code>
+				<code>aalexeev.next('он не получит все прошлые значения');</code>
+				<code>&nbsp;</code>
+				<code>const newListener = aalexeev.subscribe(/* ... */);</code>
+				<code>meetupListeners.push(newListener);</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('но будет получать все будущие');</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description big">
+		<p>При ошибке или завершении доклада подписки завершаются.</p>
+		<p>Больше значения по next не обрабатываются.</p>
+	</div>
+	<small>
+		<pre>
+				<code>aalexeev.error('Внимание! В одном из помещений обнаружено задымление. Просьба покинуть помещение!')</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Как же так!'); // это никто не услышит</code>
+				<code>/* __________________ */</code>
+				<code>aalexeev.next('Спасибо всем, кто пришел');</code>
+				<code>aalexeev.complete();</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Кстати, а вот еще...'); // это никто не услышит</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description big">
+		<p>Subject не завершает генерацию значений.</p>
+		<div class="playground" id="step5"></div>
+		<button class="btn btn-play" onclick="run(step5, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.Subject();</code>
+				<code>const subscribtion = subject.subscribe(/* ... */);</code>
+				<code>&nbsp;</code>
+				<code>setSubjectTick(subject)</code>
+				<code>setTimeout(() => { subscribtion.unsubscribe(); }, 1000);</code>
+				<code>setTimeout(() => { subject.subscribe(/* ... */); }, 1500);</code>
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    subject.next(0);</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+
+			</pre>
+		</div>
+	</div>
+	<script>
+		function step5() {
+			const playgroundElement = document.getElementById('step5');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.Subject();
+
+			setSubjectTick1(subject);
+
+			const subscribtion = startStream(playgroundElement, subject.asObservable());
+
+			setTimeout(() => {
+				subscribtion.unsubscribe();
+			}, 1000);
+
+			startStream(playgroundElement, subject.asObservable(), 1500)
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="shout">РАЗНОВИДНОСТИ SUBJECT</h2>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Behaviour Subject</h2>
+	<div class="slide-description big">
+		<p>Вы вошли на полуфразе, и в обычном случае вы ее не услышите. Но ваш замечательный сосед подсказал, о чем идет
+			речь, и вы все поняли.</p>
+		<p>В Behaviour Subject всегда хранится текущее значение, начиная с момента инициализации. При подписке
+			наблюдатель незамедлительно получает текущее значение.</p>
+		<div class="playground" id="step6_1"></div>
+		<button class="btn btn-play" onclick="run(step6_1, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.BehaviorSubject('a');</code>
+				<code>const subscribtion = subject.subscribe(/* ... */);</code>
+				<code>setSubjectTick(subject);</code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => {subscribtion.unsubscribe();}, 1000);</code>
+				<code>setTimeout(() => {subject.subscribe(/* ... */);}, 1200);</code>
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+			</pre>
+		</div>
+	</div>
+	<script>
+		function step6_1() {
+			const playgroundElement = document.getElementById('step6_1');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.BehaviorSubject('a');
+
+			setSubjectTick2(subject);
+
+			const subscribtion = startStream(playgroundElement, subject.asObservable());
+
+			setTimeout(() => {
+				subscribtion.unsubscribe();
+			}, 1000);
+
+			startStream(playgroundElement, subject.asObservable(), 1200)
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Replay Subject</h2>
+	<div class="slide-description big">
+		<p>Вы опоздали на доклад, но хотите прослушать все с самого начала. Ваш доблестный сосед шепотом пересказывает
+			вам доклад.</p>
+		<p>Replay Subject сохраняет буфер произошедших событий, и подписчик получает весь буфер и следующие
+			значения.</p>
+		<div class="playground" id="step6_2"></div>
+		<button class="btn btn-play" onclick="run(step6_2, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.ReplaySubject(1);</code>
+				<code>setSubjectTick(subject);</code>
+				<code>&nbsp;</code>
+				<code>subject.subscribe();</code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => {</code>
+				<code>   subject.subscribe(/* ... */);</code>
+				<code>}, 1200);</code>
+
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+			</pre>
+		</div>
+	</div>
+	<script>
+		function step6_2() {
+			const playgroundElement = document.getElementById('step6_2');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.ReplaySubject(1);
+
+			setSubjectTick2(subject);
+
+			startStream(playgroundElement, subject.asObservable());
+
+			startStream(playgroundElement, subject.asObservable(), 1200);
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Async Subject</h2>
+	<div class="slide-description big">
+		<p>Всю лекцию вы просидели в инстаграмме, а когда подняли голову — я сказал последнюю мысль и закончил доклад.
+			Поздравляю, это Async Subject.</p>
+		<p>Ничего, вы хотя бы получите слайды.</p>
+		<p>Async Subject передает последнее значение и только после завершения.</p>
+		<div class="playground" id="step6_3"></div>
+		<button class="btn btn-play" onclick="run(step6_3, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.AsyncSubject();</code>
+				<code>&nbsp;</code>
+				<code>setSubjectTick(subject);</code>
+				<code>&nbsp;</code>
+				<code>subject.subscribe(/* ... */);</code>
+				<code>setTimeout(() => { subject.subscribe(/* ... */); }, 1000);</code>
+				<code>setTimeout(() => { subject.subscribe(/* ... */); }, 4000);</code>
+
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+			</pre>
+		</div>
+	</div>
+	<script>
+		function step6_3() {
+			const playgroundElement = document.getElementById('step6_3');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.AsyncSubject();
+			setSubjectTick2(subject);
+
+			startStream(playgroundElement, subject.asObservable());
+
+			startStream(playgroundElement, subject.asObservable(), 1000);
+			startStream(playgroundElement, subject.asObservable(), 4000);
+		}
+	</script>
+</section>
 <!-- 214iou3245iouy398y53495p49u5piuo4yipu5y341pui5h41piu3h5yipu314y5pi143h5ipu31-->
 
 <section class="slide">

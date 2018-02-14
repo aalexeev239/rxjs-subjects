@@ -2,6 +2,10 @@
 	font-size: 20px;
 }
 
+.slide .shout {
+	font-size: 120px;
+}
+
 .slide small {
 	margin-top: 20px;
 	display: block;
@@ -20,6 +24,7 @@
 .slide-description {
 	min-height: 70px;
 	position: relative;
+	padding-right: 35px;
 }
 
 .slide-description.big {
