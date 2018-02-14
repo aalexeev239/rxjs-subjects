@@ -3,6 +3,8 @@
 }
 
 .slide small {
+	margin-top: 20px;
+	display: block;
 	font-size: 14px;
 }
 
@@ -16,12 +18,12 @@
 }
 
 .slide-description {
-	min-height: 80px;
+	min-height: 70px;
 	position: relative;
 }
 
 .slide-description.big {
-	min-height: 140px;
+	min-height: 175px;
 }
 
 .playground {

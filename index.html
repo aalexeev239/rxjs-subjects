@@ -31,58 +31,6 @@
 
 <section class="slide">
 	<h2 class="slide-header">Observable</h2>
-	<div class="slide-description big">
-		<div class="playground" id="step1"></div>
-		<p class="logger" style="margin-top: 10px"></p>
-		<button class="btn btn-play" onclick="run(step1, this)">▶</button>
-	</div>
-	<small>
-		<pre>
-				<code>const stream$ = Rx.Observable.create((observer) => {</code>
-				<code>    observer.next(1);</code>
-				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
-				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
-				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
-				<code>});</code>
-				<code>&nbsp;</code>
-				<code>const subscribtion = stream$.subscribe({</code>
-				<code>    next: (v) => logger.textContent += ' ' + v,</code>
-				<code>    complete: () => logger.textContent += ' complete!'</code>
-				<code>});</code>
-		</pre>
-	</small>
-	<script>
-		function step1() {
-			const playgroundElement = document.getElementById('step1');
-			playgroundElement.innerHTML = '';
-
-			const stream$ = Rx.Observable.create((observer) => {
-				observer.next(1);
-				setTimeout(() => {
-					observer.next(2);
-				}, 1000);
-				setTimeout(() => {
-					observer.next(3);
-				}, 2000);
-				setTimeout(() => {
-					observer.complete()
-				}, 3000);
-			});
-
-			startStream(playgroundElement, stream$);
-			const logger = playgroundElement.parentNode.querySelector('.logger');
-			logger.textContent = '';
-
-			const subscribtion = stream$.subscribe({
-				next: (v) => logger.textContent += ' ' + v,
-				complete: () => logger.textContent += ' complete!'
-			});
-		}
-	</script>
-</section>
-
-<section class="slide">
-	<h2 class="slide-header">Observable</h2>
 	<div class="slide-description">
 		<p>Observable – наблюдаемая сущность, доставляет изменения подписчикам.</p>
 	</div>
@@ -149,6 +97,58 @@
 
 <section class="slide">
 	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<div class="playground" id="step1"></div>
+		<p class="logger" style="margin-top: 10px"></p>
+		<button class="btn btn-play" onclick="run(step1, this)">▶</button>
+	</div>
+	<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = stream$.subscribe({</code>
+				<code>    next: (v) => logger.textContent += ' ' + v,</code>
+				<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+		</pre>
+	</small>
+	<script>
+		function step1() {
+			const playgroundElement = document.getElementById('step1');
+			playgroundElement.innerHTML = '';
+
+			const stream$ = Rx.Observable.create((observer) => {
+				observer.next(1);
+				setTimeout(() => {
+					observer.next(2);
+				}, 1000);
+				setTimeout(() => {
+					observer.next(3);
+				}, 2000);
+				setTimeout(() => {
+					observer.complete()
+				}, 3000);
+			});
+
+			startStream(playgroundElement, stream$);
+			const logger = playgroundElement.parentNode.querySelector('.logger');
+			logger.textContent = '';
+
+			const subscribtion = stream$.subscribe({
+				next: (v) => logger.textContent += ' ' + v,
+				complete: () => logger.textContent += ' complete!'
+			});
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
 	<div class="slide-description big">
 		<p>На каждую подписку создается отдельный поток значений</p>
 		<div class="playground" id="step2_1"></div>
@@ -161,6 +161,10 @@
 				<code>    .map(() => Math.random().toString().substr(2, 3)); // 0.12345 => 123</code>
 				<code>&nbsp;</code>
 				<code>stream$.subscribe(/* ... */);</code>
+				<code>stream$.subscribe(/* ... */);</code>
+				<code>setTimeout(() => {</code>
+				<code>    stream$.subscribe(/* ... */);</code>
+				<code>}, 800);</code>
 		</pre>
 	</small>
 	<script>
@@ -173,38 +177,8 @@
 				.map(() => Math.random().toString().substr(2, 3));
 
 			startStream(playgroundElement, stream$);
-		}
-	</script>
-</section>
-
-<section class="slide">
-	<h2 class="slide-header">Observable</h2>
-	<div class="slide-description big">
-		<p>На каждую подписку создается отдельный поток значений</p>
-		<div class="playground" id="step2_2"></div>
-		<button class="btn btn-play" onclick="run(step2_2, this)">▶</button>
-	</div>
-	<small>
-		<pre>
-				<code>const stream$ = Rx.Observable.interval(500)</code>
-				<code>    .take(5)</code>
-				<code>    .map(() => Math.random().toString().substr(2, 3)); // 0.12345 => 123</code>
-				<code>&nbsp;</code>
-				<code>stream$.subscribe(/* ... */);</code>
-				<code>stream$.subscribe(/* ... */);</code>
-		</pre>
-	</small>
-	<script>
-		function step2_2() {
-			const playgroundElement = document.getElementById('step2_2');
-			playgroundElement.innerHTML = '';
-
-			const stream$ = Rx.Observable.interval(TICK_MS)
-				.take(5)
-				.map(() => Math.random().toString().substr(2, 3));
-
 			startStream(playgroundElement, stream$);
-			startStream(playgroundElement, stream$);
+			startStream(playgroundElement, stream$, 800);
 		}
 	</script>
 </section>

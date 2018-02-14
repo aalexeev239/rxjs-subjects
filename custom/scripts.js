@@ -59,8 +59,8 @@ function setTimeline(parentElement) {
 	}, 0);
 
 	setTimeout(() => {
-		timelineElement.style.width = ((MAX_TIME_MS / TICK_MS) * STEP) + 'px';
-	}, 10);
+		timelineElement.style.width = (((MAX_TIME_MS) / TICK_MS) * STEP) + 'px';
+	}, 100);
 
 
 	parentElement.appendChild(timelineElement);
