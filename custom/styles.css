@@ -31,6 +31,35 @@
 	min-height: 10px;
 }
 
+.text-hot {
+	color: #C0504D;
+}
+
+.text-cold {
+	color: #4F81BD;
+}
+
+.relative-container {
+	position: relative;
+}
+
+.relative-image {
+	position: absolute;
+	box-shadow: 0 0 0 2px #434343;
+}
+
+.code-special {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 11px;
+	padding: 10px;
+	padding-left: 35px;
+	padding-bottom: 0;
+	border: 1px solid #787878;
+	opacity: .7;
+}
+
 .btn {
 	font-size: 20px;
 	padding: .3em .7em;
@@ -58,6 +87,10 @@
 	background: #c29b00;
 	opacity: .7;
 	cursor: default;
+}
+
+.btn.hidden {
+	display: none;
 }
 
 .btn-play {
@@ -128,7 +161,7 @@
 	width: 30px;
 	height: 30px;
 	line-height: 30px;
-	font-size: 14px;
+	font-size: 13px;
 	box-sizing: border-box;
 	box-shadow: 0 0 0 2px currentColor;
 	text-align: center;

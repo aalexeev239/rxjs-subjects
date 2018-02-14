@@ -1,4 +1,5 @@
 let START = new Date();
+let isRunning = false;
 const STEP = 50;
 const TICK_MS = 500;
 const MAX_TIME_MS = 6000;
@@ -93,7 +94,25 @@ function startStream(parentElement, input$, delay = 0) {
 	return subscription;
 }
 
-let isRunning = false;
+function setSubjectTick1(subject) {
+	subject.next(0);
+	setTimeout(() => subject.next(1), 500);
+	setTimeout(() => subject.next(2), 1000);
+	setTimeout(() => subject.next(3), 1500);
+	setTimeout(() => subject.next(4), 2000);
+	setTimeout(() => subject.next(5), 2500);
+	setTimeout(() => subject.complete(), 3000);
+}
+
+
+function setSubjectTick2(subject) {
+	setTimeout(() => subject.next(1), 500);
+	setTimeout(() => subject.next(2), 1000);
+	setTimeout(() => subject.next(3), 1500);
+	setTimeout(() => subject.next(4), 2000);
+	setTimeout(() => subject.next(5), 2500);
+	setTimeout(() => subject.complete(), 3000);
+}
 
 function run(stepFn, btnElement) {
 	if (isRunning) {
