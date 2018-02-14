@@ -6,6 +6,7 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="node_modules/tinkoff-shower/theme/styles.css">
+	<link rel="stylesheet" href="custom/styles.css">
 
 	<link rel="icon" sizes="16x16" href="node_modules/tinkoff-shower/theme/images/favicon-16x16.png">
 	<link rel="icon" sizes="32x32" href="node_modules/tinkoff-shower/theme/images/favicon-32x32.png">
@@ -13,18 +14,62 @@
 </head>
 <body class="shower list">
 
+<template id="timeline-template">
+	<div class="timeline" style="width: 0px;"></div>
+</template>
+
 <header class="caption">
-	<h1>За последний год мы многое поняли...</h1>
-	<p>Работая не покладая рук</p>
+	<h1>RxJS Subjects</h1>
 </header>
 
 <section class="slide invert" id="cover">
-	<h2>Мы долго-долго делали...</h2>
 	<img class="cover top" src="pictures/cover.jpg" alt="Hands on the orange typewriter in a park">
 	<div class="cover-title">
-		<h2>Интеграция чего-то в процесс разработки</h2>
+		<h2>RxJS Subjects</h2>
 	</div>
 </section>
+
+<section class="slide">
+	<h2 class="slide-header">Пример</h2>
+	<div class="two-columns">
+		<div class="playground" id="step1">
+		</div>
+		<div>
+			<h2>Константин Констрантинопольский</h2>
+			<p>Разработчик</p>
+			<button class="btn" onclick="run(step1, this)">start</button>
+		</div>
+
+		<script>
+			const playgroundElement = document.getElementById('step1');
+
+			function step1() {
+				playgroundElement.innerHTML = '';
+
+				const stream$ = Rx.Observable.create((observer) => {
+					observer.next(1);
+					setTimeout(() => {
+						observer.next(2);
+					}, 1000);
+					setTimeout(() => {
+						observer.next(3);
+					}, 2000);
+					setTimeout(() => {
+						observer.complete()
+					}, 3000);
+				});
+
+				startStream(playgroundElement, stream$);
+
+				// const subscribtion = stream$.subscribe({
+				// 	next: (v) => logger.textContent += ' ' + v,
+				// 	complete: () => logger.textContent += ' complete!'
+				// });
+			}
+		</script>
+	</div>
+</section>
+
 
 <section class="slide">
 	<h2 class="slide-header">Об авторе</h2>
@@ -233,7 +278,8 @@
 <div class="progress"></div>
 
 <script src="node_modules/shower-core/shower.min.js"></script>
-<!-- Copyright © 2017 Yours Truly, Famous Inc. -->
-
+<script src="node_modules/rxjs/bundles/Rx.min.js"></script>
+<script src="custom/scripts.js"></script>
+<!-- Copyright © 2018 Andrey Alexeev -->
 </body>
 </html>

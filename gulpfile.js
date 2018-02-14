@@ -35,7 +35,12 @@ gulp.task('prepare', () => {
 		.pipe(replace(
 			/(<script src=")(node_modules\/shower-core\/)(shower.min.js"><\/script>)/g,
 			'$1shower/$3', {skipBinary: true}
+		))
+		.pipe(replace(
+			/(<script src=")(node_modules\/rxjs\/bundles\/)(Rx.min.js"><\/script>)/g,
+			'$1dist/$3', {skipBinary: true}
 		));
+
 
 	const core = gulp.src([
 		'shower.min.js'
@@ -44,6 +49,15 @@ gulp.task('prepare', () => {
 	})
 		.pipe(rename((path) => {
 			path.dirname = 'shower/' + path.dirname;
+		}));
+
+	const rx = gulp.src([
+		'Rx.min.js'
+	], {
+		cwd: 'node_modules/rxjs/bundles'
+	})
+		.pipe(rename((path) => {
+			path.dirname = 'dist/' + path.dirname;
 		}));
 
 	const material = gulp.src([
@@ -79,7 +93,7 @@ gulp.task('prepare', () => {
 			'$1../../$3', {skipBinary: true}
 		));
 
-	return merge(shower, core, themes)
+	return merge(shower, rx, core, themes)
 		.pipe(gulp.dest('prepared'));
 
 });
