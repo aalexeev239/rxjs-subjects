@@ -1,6 +1,37 @@
+.shower {
+	font-size: 20px;
+}
+
+.slide small {
+	font-size: 14px;
+}
+
+.slide p {
+	font-size: 18px;
+	margin: 0;
+}
+
+.slide .slide-header {
+	margin-bottom: 30px;
+}
+
+.slide-description {
+	min-height: 80px;
+	position: relative;
+}
+
+.slide-description.big {
+	min-height: 140px;
+}
+
+.playground {
+	padding: 10px 0;
+	min-height: 10px;
+}
+
 .btn {
-	font-size: inherit;
-	padding: 0.5em 1em;
+	font-size: 20px;
+	padding: .3em .7em;
 	background: #ffcf0f;
 	color: #000000;
 	border: none;
@@ -27,8 +58,15 @@
 	cursor: default;
 }
 
+.btn-play {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
 .timeline {
 	color: red;
+	margin: 15px 0;
 	height: 4px;
 	background-color: currentColor;
 	position: relative;
@@ -73,7 +111,7 @@
 }
 
 .timeline + .timeline {
-	margin-top: 50px;
+	margin-top: 40px;
 }
 
 .entry {

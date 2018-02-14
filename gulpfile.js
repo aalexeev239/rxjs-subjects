@@ -17,6 +17,7 @@ gulp.task('prepare', () => {
 		'!docs{,/**}',
 		'!node_modules{,/**}',
 		'!prepared{,/**}',
+		'!utils{,/**}',
 		'!CONTRIBUTING.md',
 		'!LICENSE.md',
 		'!README.md',

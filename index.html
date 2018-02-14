@@ -30,10 +30,190 @@
 </section>
 
 <section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description big">
+		<div class="playground" id="step1"></div>
+		<p class="logger" style="margin-top: 10px"></p>
+		<button class="btn btn-play" onclick="run(step1, this)">▶</button>
+	</div>
+	<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = stream$.subscribe({</code>
+				<code>    next: (v) => logger.textContent += ' ' + v,</code>
+				<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+		</pre>
+	</small>
+	<script>
+		function step1() {
+			const playgroundElement = document.getElementById('step1');
+			playgroundElement.innerHTML = '';
+
+			const stream$ = Rx.Observable.create((observer) => {
+				observer.next(1);
+				setTimeout(() => {
+					observer.next(2);
+				}, 1000);
+				setTimeout(() => {
+					observer.next(3);
+				}, 2000);
+				setTimeout(() => {
+					observer.complete()
+				}, 3000);
+			});
+
+			startStream(playgroundElement, stream$);
+			const logger = playgroundElement.parentNode.querySelector('.logger');
+			logger.textContent = '';
+
+			const subscribtion = stream$.subscribe({
+				next: (v) => logger.textContent += ' ' + v,
+				complete: () => logger.textContent += ' complete!'
+			});
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>Observable – наблюдаемая сущность, доставляет изменения подписчикам.</p>
+	</div>
+	<small>
+		<pre>
+				<code>const <mark>stream$</mark> = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = <mark>stream$</mark>.subscribe({</code>
+				<code>    next: (v) => logger.textContent += ' ' + v,</code>
+				<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>Observer – наблюдатель. Функция создания определяет, как он будет получать значения.</p>
+	</div>
+	<small>
+		<pre>
+			<code>const stream$ = Rx.Observable.create((<mark>observer</mark>) => {</code>
+			<code>    <mark>observer</mark>.next(1);</code>
+			<code>    setTimeout(() => { <mark>observer</mark>.next(2);},    1000);</code>
+			<code>    setTimeout(() => { <mark>observer</mark>.next(3);},    2000);</code>
+			<code>    setTimeout(() => { <mark>observer</mark>.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = stream$.subscribe({</code>
+			<code>    <mark>next: (v) => logger.textContent += ' ' + v,</mark></code>
+			<code>    <mark>complete: () => logger.textContent += ' complete!'</mark></code>
+				<code>});</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>Subscribtion – объект подписки.</p>
+	</div>
+	<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+			<code>const <mark>subscribtion</mark> = <mark>stream$</mark>.subscribe({</code>
+				<code>    next: (v) => logger.textContent += ' ' + v,</code>
+				<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description big">
+		<p>На каждую подписку создается отдельный поток значений</p>
+		<div class="playground" id="step2_1"></div>
+		<button class="btn btn-play" onclick="run(step2_1, this)">▶</button>
+	</div>
+	<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.interval(500)</code>
+				<code>    .take(5)</code>
+				<code>    .map(() => Math.random().toString().substr(2, 3)); // 0.12345 => 123</code>
+				<code>&nbsp;</code>
+				<code>stream$.subscribe(/* ... */);</code>
+		</pre>
+	</small>
+	<script>
+		function step2_1() {
+			const playgroundElement = document.getElementById('step2_1');
+			playgroundElement.innerHTML = '';
+
+			const stream$ = Rx.Observable.interval(TICK_MS)
+				.take(5)
+				.map(() => Math.random().toString().substr(2, 3));
+
+			startStream(playgroundElement, stream$);
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description big">
+		<p>На каждую подписку создается отдельный поток значений</p>
+		<div class="playground" id="step2_2"></div>
+		<button class="btn btn-play" onclick="run(step2_2, this)">▶</button>
+	</div>
+	<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.interval(500)</code>
+				<code>    .take(5)</code>
+				<code>    .map(() => Math.random().toString().substr(2, 3)); // 0.12345 => 123</code>
+				<code>&nbsp;</code>
+				<code>stream$.subscribe(/* ... */);</code>
+				<code>stream$.subscribe(/* ... */);</code>
+		</pre>
+	</small>
+	<script>
+		function step2_2() {
+			const playgroundElement = document.getElementById('step2_2');
+			playgroundElement.innerHTML = '';
+
+			const stream$ = Rx.Observable.interval(TICK_MS)
+				.take(5)
+				.map(() => Math.random().toString().substr(2, 3));
+
+			startStream(playgroundElement, stream$);
+			startStream(playgroundElement, stream$);
+		}
+	</script>
+</section>
+<!-- 214iou3245iouy398y53495p49u5piuo4yipu5y341pui5h41piu3h5yipu314y5pi143h5ipu31-->
+
+<section class="slide">
 	<h2 class="slide-header">Пример</h2>
 	<div class="two-columns">
-		<div class="playground" id="step1">
-		</div>
+		<div class="playground" id="step1"></div>
 		<div>
 			<h2>Константин Констрантинопольский</h2>
 			<p>Разработчик</p>
