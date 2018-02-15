@@ -26,7 +26,7 @@ gulp.task('prepare', () => {
 		'!package-lock.json'
 	])
 		.pipe(replace(
-			/(<link rel="stylesheet" href=")(node_modules\/tinkoff-shower)([^\/]*)\/(.*\.css">)/g,
+			/(<link.*href=")(node_modules\/tinkoff-shower)([^\/]*)\/(.*\.(css|png)">)/g,
 			'$1shower/themes/tinkoff$3/$4', {skipBinary: true}
 		))
 		.pipe(replace(
