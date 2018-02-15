@@ -1,6 +1,10 @@
 # RxJS Subjects
 
-**Важно**: пожалуйста, оцените качество выступления: [https://goo.gl/forms/kkG0QSOviO6yOvRn1](https://goo.gl/forms/kkG0QSOviO6yOvRn1) 
+## **Важно: пожалуйста, оцените выступлениe**
+ 
+Анкета на 5 минут: [https://goo.gl/forms/kkG0QSOviO6yOvRn1](https://goo.gl/forms/kkG0QSOviO6yOvRn1)
+
+ 
 
 ## Материалы
 
