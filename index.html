@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Shower Presentation Engine</title>
+	<title>RxJS</title>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="node_modules/tinkoff-shower/theme/styles.css">
+	<link rel="stylesheet" href="custom/styles.css">
 
 	<link rel="icon" sizes="16x16" href="node_modules/tinkoff-shower/theme/images/favicon-16x16.png">
 	<link rel="icon" sizes="32x32" href="node_modules/tinkoff-shower/theme/images/favicon-32x32.png">
@@ -13,18 +14,1103 @@
 </head>
 <body class="shower list">
 
+<template id="timeline-template">
+	<div class="timeline" style="width: 0px;"></div>
+</template>
+
 <header class="caption">
-	<h1>За последний год мы многое поняли...</h1>
-	<p>Работая не покладая рук</p>
+	<h1>RxJS Subjects</h1>
 </header>
 
 <section class="slide invert" id="cover">
-	<h2>Мы долго-долго делали...</h2>
-	<img class="cover top" src="pictures/cover.jpg" alt="Hands on the orange typewriter in a park">
+	<div class="intro">
+		<img width="300" class="intro-img" src="pictures/rxjs-logo.png" alt="RxJS">
+	</div>
 	<div class="cover-title">
-		<h2>Интеграция чего-то в процесс разработки</h2>
+		<h2>RxJS Subjects</h2>
 	</div>
 </section>
+
+<section class="slide">
+	<h2 class="slide-header">Об авторе</h2>
+	<div class="two-columns">
+		<div>
+			<img src="pictures/author.png" width="100%" alt="">
+		</div>
+		<div>
+			<h2>Андрей Алексеев</h2>
+			<p>Разрабатываю в <a href="https://www.tinkoff.ru/business/" target="_blank" rel="noopener noreferrer">tinkoff.ru/business</a>
+			</p>
+			<p>Преподаю в <a href="https://fintech.tinkoff.ru/" target="_blank" rel="noopener noreferrer">Tinkoff
+				Fintech
+				School</a></p>
+			<p>Не пишу в твиттер <a href="https://twitter.com/aalexeev_ru" target="_blank" rel="noopener noreferrer">aalexeev_ru</a>
+			</p>
+		</div>
+	</div>
+</section>
+
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>Observable – наблюдаемая сущность, доставляет изменения подписчикам.</p>
+		<div class="playground" id="step1"></div>
+		<p class="logger" style="margin-top: 10px"></p>
+		<button class="btn btn-play" onclick="run(step1, this)">▶</button>
+	</div>
+	<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = stream$.subscribe({</code>
+				<code>    next: (v) => logger.textContent += ' ' + v,</code>
+				<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+		</pre>
+	</small>
+	<script>
+		function step1() {
+			const playgroundElement = document.getElementById('step1');
+			playgroundElement.innerHTML = '';
+
+			const stream$ = Rx.Observable.create((observer) => {
+				observer.next(1);
+				setTimeout(() => {
+					observer.next(2);
+				}, 1000);
+				setTimeout(() => {
+					observer.next(3);
+				}, 2000);
+				setTimeout(() => {
+					observer.complete()
+				}, 3000);
+			});
+
+			startStream(playgroundElement, stream$);
+			const logger = playgroundElement.parentNode.querySelector('.logger');
+			logger.textContent = '';
+
+			const subscribtion = stream$.subscribe({
+				next: (v) => logger.textContent += ' ' + v,
+				complete: () => logger.textContent += ' complete!'
+			});
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>
+			<mark>Observable</mark>
+			– наблюдаемая сущность, доставляет изменения подписчикам.
+		</p>
+	</div>
+	<small>
+		<pre>
+				<code>const <mark>stream$</mark> = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = <mark>stream$</mark>.subscribe({</code>
+				<code>    next: (v) => logger.textContent += ' ' + v,</code>
+				<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>Функция создания определяет, наблюдатели (подписчики) будет получать значения.</p>
+	</div>
+	<small>
+		<pre>
+			<code>const stream$ = Rx.Observable.create((<mark>observer</mark>) => {</code>
+			<code>    <mark>observer</mark>.next(1);</code>
+			<code>    setTimeout(() => { <mark>observer</mark>.next(2);},    1000);</code>
+			<code>    setTimeout(() => { <mark>observer</mark>.next(3);},    2000);</code>
+			<code>    setTimeout(() => { <mark>observer</mark>.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = stream$.subscribe({</code>
+			<code>    next: (v) => logger.textContent += ' ' + v,</code>
+			<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>
+			<mark>Observer</mark>
+			– сам наблюдатель, состоящий из функций-обработчиков next/error/complete
+		</p>
+		<p>Их можно перечислить через запятую или задать как объект.</p>
+	</div>
+	<small>
+		<pre>
+			<code>const stream$ = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = stream$.subscribe({</code>
+			<code>    <mark>next: (v) => logger.textContent += ' ' + v,</mark></code>
+			<code>    <mark>complete: () => logger.textContent += ' complete!'</mark></code>
+				<code>});</code>
+		</pre>
+	</small>
+</section>
+
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>
+			<mark>Subscribtion</mark>
+			– подписка. Обычно используется для вызова
+			<mark>unsubscribe</mark>
+			.
+		</p>
+	</div>
+	<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+			<code>const <mark>subscribtion</mark> = stream$.subscribe({</code>
+				<code>    next: (v) => logger.textContent += ' ' + v,</code>
+				<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+			<code><mark>subscribtion.unsubscribe();</mark></code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description big">
+		<p>На каждую подписку создается отдельный поток значений</p>
+		<div class="playground" id="step2_1"></div>
+		<button class="btn btn-play" onclick="run(step2_1, this)">▶</button>
+	</div>
+	<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.interval(500)</code>
+				<code>    .take(5)</code>
+				<code>    .map(() => Math.random().toString().substr(2, 3)); // 0.12345 => 123</code>
+				<code>&nbsp;</code>
+				<code>stream$.subscribe(/* ... */);</code>
+				<code>stream$.subscribe(/* ... */);</code>
+				<code>setTimeout(() => {</code>
+				<code>    stream$.subscribe(/* ... */);</code>
+				<code>}, 800);</code>
+		</pre>
+	</small>
+	<script>
+		function step2_1() {
+			const playgroundElement = document.getElementById('step2_1');
+			playgroundElement.innerHTML = '';
+
+			const stream$ = Rx.Observable.interval(TICK_MS)
+				.take(5)
+				.map(() => Math.random().toString().substr(2, 3));
+
+			startStream(playgroundElement, stream$);
+			startStream(playgroundElement, stream$);
+			startStream(playgroundElement, stream$, 800);
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description big">
+		<p>Однако есть Observable, распределяюшие события по всем подписчикам</p>
+		<button class="btn hidden" id="click-button">Жмяк</button>
+		<div class="playground" id="step3"></div>
+		<button class="btn btn-play" onclick="run(step3, this)">▶</button>
+	</div>
+	<small>
+		<pre>
+				<code>const buttonElement = document.getElementById('click-button');</code>
+				<code>const START = new Date();</code>
+				<code>const stream$ = Rx.Observable.fromEvent(buttonElement, 'click')</code>
+				<code>    .map(() => ((new Date() - START) / 1000).toFixed(2));</code>
+				<code>&nbsp;</code>
+				<code>stream$.subscribe(/* ... */);</code>
+				<code>setTimeout(() => {stream$.subscribe(/* ... */);}, 1000);</code>
+				<code>setTimeout(() => {stream$.subscribe(/* ... */);}, 2000);</code>
+		</pre>
+	</small>
+	<script>
+		function step3() {
+			const playgroundElement = document.getElementById('step3');
+			playgroundElement.innerHTML = '';
+
+			const buttonElement = document.getElementById('click-button');
+			buttonElement.classList.remove('hidden');
+
+			const clickOnce = () => {
+				START = new Date();
+
+				const stream$ = Rx.Observable.fromEvent(buttonElement, 'click')
+					.map(() => ((new Date() - START) / 1000).toFixed(2));
+
+				startStream(playgroundElement, stream$);
+				startStream(playgroundElement, stream$, 1000);
+				startStream(playgroundElement, stream$, 2000);
+
+				buttonElement.removeEventListener('click', clickOnce);
+			};
+
+			buttonElement.addEventListener('click', clickOnce)
+		}
+	</script>
+</section>
+
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description big">
+		<p>Эти 2 типа Observable называются <strong class="text-cold">холодными</strong> и <strong class="text-hot">горячими</strong>.
+		</p>
+		<br>
+		<p><strong class="text-cold">Холодные</strong> создают независимые потоки под каждую подписку.</p>
+		<br>
+		<p><strong class="text-hot">Горячие</strong> разделяют поток друг с другом</p>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>Ну и что?</p>
+		<p>Иногда надо <strong class="text-hot">подогреть</strong> <strong class="text-cold">холодный</strong>
+			Observable. Например, чтобы не делать 2 запроса:</p>
+		<br>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const request$ = this.http.get<any>('https://api.github.com/search/repositories?q=rxjs');</code>
+				<code>&nbsp;</code>
+				<code>request$</code>
+				<code> .map(data => data.items.map(repo => repo.name))</code>
+				<code> .subscribe(v => console.log(v));</code>
+				<code>&nbsp;</code>
+				<code>request$</code>
+				<code> .map(data => data.items.filter(repo => repo.name === 'rxjs')[0])</code>
+				<code> .map(repo => repo.score)</code>
+				<code> .subscribe(v => console.log(v));</code>
+</pre>
+		</small>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>Ну и что?</p>
+		<p>Иногда надо <strong class="text-hot">подогреть</strong> <strong class="text-cold">холодный</strong>
+			Observable. Например, чтобы не делать 2 запроса:</p>
+		<br>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const request$ = this.http.get<any>('https://api.github.com/search/repositories?q=rxjs');</code>
+				<code>&nbsp;</code>
+				<code>request$</code>
+				<code> .map(data => data.items.map(repo => repo.name))</code>
+				<code> .subscribe(v => console.log(v));</code>
+				<code>&nbsp;</code>
+				<code>request$</code>
+				<code> .map(data => data.items.filter(repo => repo.name === 'rxjs')[0])</code>
+				<code> .map(repo => repo.score)</code>
+				<code> .subscribe(v => console.log(v));</code>
+		</pre>
+		</small>
+		<img class="relative-image" style="width: 380px; right: 0px; top: 25px;" src="pictures/2requests.png"
+			 alt="2 requests">
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="shout">SUBJECT</h2>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description big">
+		<p>Объединение Observable и Observer. Передает значение всем подписчикам</p>
+		<div class="playground" id="step4"></div>
+		<button class="btn btn-play" onclick="run(step4, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.Subject();</code>
+				<code>setSubjectTick(subject);</code>
+				<code>&nbsp;</code>
+				<code>subject.subscribe();</code>
+				<code>setTimeout(() => subject.subscribe(/* ... */), 1000);</code>
+				<code>setTimeout(() => subject.subscribe(/* ... */), 2000);</code>
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    subject.next(0);</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+
+			</pre>
+		</div>
+	</div>
+	<script>
+		function step4() {
+			const playgroundElement = document.getElementById('step4');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.Subject();
+			setSubjectTick1(subject);
+
+			startStream(playgroundElement, subject);
+			startStream(playgroundElement, subject, 1000);
+			startStream(playgroundElement, subject, 2000);
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description big">
+		<p>Объединение
+			<mark>Observable</mark>
+			и Observer. Передает значение всем подписчикам
+		</p>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.Subject();</code>
+				<code>setSubjectTick(subject);</code>
+				<code>&nbsp;</code>
+			<code>subject.<mark>subscribe();</mark></code>
+			<code>setTimeout(() => subject.<mark>subscribe(/* ... */), 1000);</mark></code>
+			<code>setTimeout(() => subject.<mark>subscribe(/* ... */), 2000);</mark></code>
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    subject.next(0);</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+
+			</pre>
+		</div>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description big">
+		<p>Объединение
+			Observable
+			и
+			<mark>Observer</mark>
+			. Передает значение всем подписчикам
+		</p>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.Subject();</code>
+				<code>setSubjectTick(subject);</code>
+				<code>&nbsp;</code>
+			<code>subject.subscribe();</code>
+			<code>setTimeout(() => subject.subscribe(/* ... */), 1000);</code>
+			<code>setTimeout(() => subject.subscribe(/* ... */), 2000);</code>
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+				<code>    <mark>subject.next(0)</mark>;</code>
+				<code>    setTimeout(() => <mark>subject.next(1)</mark>, 500);</code>
+				<code>    setTimeout(() => <mark>subject.next(2)</mark>, 1000);</code>
+				<code>    setTimeout(() => <mark>subject.next(3)</mark>, 1500);</code>
+				<code>    setTimeout(() => <mark>subject.next(4)</mark>, 2000);</code>
+				<code>    setTimeout(() => <mark>subject.next(5)</mark>, 2500);</code>
+				<code>    setTimeout(() => <mark>subject.complete()</mark>, 3000);</code>
+					<code>}</code>
+
+			</pre>
+		</div>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description">
+		<p>Пример</p>
+	</div>
+	<small>
+		<pre>
+				<code><mark>const aalexeev = new Subject();</mark></code>
+				<code>&nbsp;</code>
+				<code>for (let i = 0; i < meetupListeners; i++) {</code>
+				<code>   meetupListeners[i] = aalexeev.subscribe(/* ... */);</code>
+				<code>}</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Я рассказываю этот доклад');</code>
+				<code>aalexeev.next('Произношу какую-то мысль — передаю значение через .next');</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description">
+		<p>Пример</p>
+	</div>
+	<small>
+		<pre>
+				<code>const aalexeev = new Subject();</code>
+				<code>&nbsp;</code>
+			<code><mark>for (let i = 0; i < meetupListeners; i++) {</mark></code>
+			<code><mark>   meetupListeners[i] = aalexeev.subscribe(/* ... */);</mark></code>
+			<code><mark>}</mark></code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Я рассказываю этот доклад');</code>
+				<code>aalexeev.next('Произношу какую-то мысль — передаю значение через .next');</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description">
+		<p>Пример</p>
+	</div>
+	<small>
+		<pre>
+				<code>const aalexeev = new Subject();</code>
+				<code>&nbsp;</code>
+				<code>for (let i = 0; i < meetupListeners; i++) {</code>
+				<code>   meetupListeners[i] = aalexeev.subscribe(/* ... */);</code>
+				<code>}</code>
+				<code>&nbsp;</code>
+			<code><mark>aalexeev.next('Я рассказываю этот доклад');</mark></code>
+			<code><mark>aalexeev.next('Произношу какую-то мысль — передаю значение через .next');</mark></code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description">
+		<p>Пример</p>
+	</div>
+	<small>
+		<pre>
+				<code>aalexeev.next('Если кто-то опоздал и пришел только сейчас');</code>
+				<code>aalexeev.next('он не получит все прошлые значения');</code>
+				<code>&nbsp;</code>
+			<code><mark>const newListener = aalexeev.subscribe(/* ... */);</mark></code>
+				<code>meetupListeners.push(newListener);</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('но будет получать все будущие');</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description">
+		<p>Пример</p>
+	</div>
+	<small>
+		<pre>
+				<code>const leaving = Math.floor(Math.random() * meetupListeners); // кто-то</code>
+				<code><mark>meetupListeners[leaving].unsubscribe();</mark></code>
+				<code>meetupListeners.splice(leaving, 1);</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Кто только что ушел, не услышит самого главного');</code>
+
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description">
+		<p>Пример</p>
+	</div>
+	<small>
+		<pre>
+				<code>aalexeev.error('Внимание! В одном из помещений обнаружено задымление. Просьба покинуть помещение!')</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Как же так!'); // это никто не услышит</code>
+				<code>/* __________________ */</code>
+				<code>aalexeev.next('Спасибо всем, кто пришел');</code>
+				<code>aalexeev.complete();</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Кстати, а вот еще...'); // это никто не услышит</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description big">
+		<p>Subject не завершает генерацию значений.</p>
+		<div class="playground" id="step5"></div>
+		<button class="btn btn-play" onclick="run(step5, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.Subject();</code>
+				<code>const subscribtion = subject.subscribe(/* ... */);</code>
+				<code>&nbsp;</code>
+				<code>setSubjectTick(subject)</code>
+				<code>setTimeout(() => { subscribtion.unsubscribe(); }, 1000);</code>
+				<code>setTimeout(() => { subject.subscribe(/* ... */); }, 1500);</code>
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    subject.next(0);</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+
+			</pre>
+		</div>
+	</div>
+	<script>
+		function step5() {
+			const playgroundElement = document.getElementById('step5');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.Subject();
+
+			setSubjectTick1(subject);
+
+			const subscribtion = startStream(playgroundElement, subject.asObservable());
+
+			setTimeout(() => {
+				subscribtion.unsubscribe();
+			}, 1000);
+
+			startStream(playgroundElement, subject.asObservable(), 1500)
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="shout">РАЗНОВИДНОСТИ SUBJECT</h2>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Behaviour Subject</h2>
+	<div class="slide-description big">
+		<p>Всегда хранит текущее значение. При инициализации требует начальное значение.</p>
+		<p>При подписке наблюдатель незамедлительно получит текущее значение.</p>
+		<div class="playground" id="step6_1"></div>
+		<button class="btn btn-play" onclick="run(step6_1, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.BehaviorSubject('abc');</code>
+				<code>const subscribtion = subject.subscribe(/* ... */);</code>
+				<code>setSubjectTick(subject);</code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => {subscribtion.unsubscribe();}, 1000);</code>
+				<code>setTimeout(() => {subject.subscribe(/* ... */);}, 1200);</code>
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+			</pre>
+		</div>
+	</div>
+	<script>
+		function step6_1() {
+			const playgroundElement = document.getElementById('step6_1');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.BehaviorSubject('abc');
+
+			setSubjectTick2(subject);
+
+			const subscribtion = startStream(playgroundElement, subject.asObservable());
+
+			setTimeout(() => {
+				subscribtion.unsubscribe();
+			}, 1000);
+
+			startStream(playgroundElement, subject.asObservable(), 1200)
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Replay Subject</h2>
+	<div class="slide-description big">
+		<p>Cохраняет буфер произошедших событий.</p>
+		<p>При подписке наблюдатель незамедлительно получит текущий буфер.</p>
+		<p>Нет начального значения, как в Behaviour.</p>
+		<div class="playground" id="step6_2"></div>
+		<button class="btn btn-play" onclick="run(step6_2, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.ReplaySubject(2);</code>
+				<code>setSubjectTick(subject);</code>
+				<code>&nbsp;</code>
+				<code>subject.subscribe();</code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => {</code>
+				<code>   subject.subscribe(/* ... */);</code>
+				<code>}, 1200);</code>
+
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    subject.next(1)</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+			</pre>
+		</div>
+	</div>
+	<script>
+		function step6_2() {
+			const playgroundElement = document.getElementById('step6_2');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.ReplaySubject(2);
+
+			setSubjectTick1(subject);
+
+			startStream(playgroundElement, subject.asObservable());
+
+			startStream(playgroundElement, subject.asObservable(), 1200);
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Async Subject</h2>
+	<div class="slide-description big">
+		<p>Передает только последнее значение и только после завершения.</p>
+		<p>Похож на Promise.</p>
+		<div class="playground" id="step6_3"></div>
+		<button class="btn btn-play" onclick="run(step6_3, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const subject = new Rx.AsyncSubject();</code>
+				<code>&nbsp;</code>
+				<code>setSubjectTick(subject);</code>
+				<code>&nbsp;</code>
+				<code>subject.subscribe(/* ... */);</code>
+				<code>setTimeout(() => { subject.subscribe(/* ... */); }, 1000);</code>
+				<code>setTimeout(() => { subject.subscribe(/* ... */); }, 4000);</code>
+
+		</pre>
+		</small>
+		<div class="code-special">
+			<pre>
+					<code>function setSubjectTick(subject) {</code>
+					<code>    setTimeout(() => subject.next(1), 500);</code>
+					<code>    setTimeout(() => subject.next(2), 1000);</code>
+					<code>    setTimeout(() => subject.next(3), 1500);</code>
+					<code>    setTimeout(() => subject.next(4), 2000);</code>
+					<code>    setTimeout(() => subject.next(5), 2500);</code>
+					<code>    setTimeout(() => subject.complete(), 3000);</code>
+					<code>}</code>
+			</pre>
+		</div>
+	</div>
+	<script>
+		function step6_3() {
+			const playgroundElement = document.getElementById('step6_3');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.AsyncSubject();
+			setSubjectTick2(subject);
+
+			startStream(playgroundElement, subject.asObservable());
+
+			startStream(playgroundElement, subject.asObservable(), 1000);
+			startStream(playgroundElement, subject.asObservable(), 4000);
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Итого</h2>
+	<ol>
+		<li>Subject</li>
+		<li class="next">BehaviorSubject(value)</li>
+		<li class="next">ReplaySubject(buffer)</li>
+		<li class="next">AsyncSubject()</li>
+	</ol>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description big">
+		<p>Вернемся к задаче разделения значений между несколькими подписчиками.</p>
+		<p>С помощью Subject-ов это можно решить вот так:</p>
+		<div class="playground" id="step7"></div>
+		<button class="btn btn-play" onclick="run(step7, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+			<code>const <mark>subject</mark> = new Rx.Subject();</code>
+				<code>Rx.Observable.interval(500)</code>
+				<code>   .take(5)</code>
+				<code>   .map(() => Math.random().toString().substr(2, 3))</code>
+			<code>   .subscribe(<mark>subject</mark>);</code>
+				<code>&nbsp;</code>
+			<code><mark>subject</mark>.subscribe(/* ... */);</code>
+			<code><mark>subject</mark>.subscribe(/* ... */);</code>
+			<code>setTimeout(() => {<mark>subject</mark>.subscribe(/* ... */);}, 800);</code>
+		</pre>
+		</small>
+	</div>
+	<script>
+		function step7() {
+			const playgroundElement = document.getElementById('step7');
+			playgroundElement.innerHTML = '';
+
+			const subject = new Rx.Subject();
+			Rx.Observable.interval(TICK_MS)
+				.take(5)
+				.map(() => Math.random().toString().substr(2, 3))
+				.subscribe(subject);
+
+			startStream(playgroundElement, subject.asObservable());
+			startStream(playgroundElement, subject.asObservable());
+			startStream(playgroundElement, subject.asObservable(), 800);
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description big">
+		<p>Оператор <strong>multicast</strong> позволяет не выделять промежуточный Subject, а создать сразу “правильный”
+			Observable.</p>
+		<div class="playground" id="step8"></div>
+		<button class="btn btn-play" onclick="run(step8, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const connectable$ = Rx.Observable.interval(500)</code>
+				<code>   .take(5)</code>
+				<code>   .map(() => Math.random().toString().substr(2, 3))</code>
+				<code>   <mark>.multicast(new Rx.Subject());</mark></code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 500);</code>
+				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 1000);</code>
+				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 1500);</code>
+				<code>connectable$.connect();</code>
+
+		</pre>
+		</small>
+	</div>
+	<script>
+		function step8() {
+			const playgroundElement = document.getElementById('step8');
+			playgroundElement.innerHTML = '';
+
+			const connectable$ = Rx.Observable.interval(TICK_MS)
+				.take(5)
+				.map(() => Math.random().toString().substr(2, 3))
+				.multicast(new Rx.Subject());
+
+			startStream(playgroundElement, connectable$, 500);
+			startStream(playgroundElement, connectable$, 1000);
+			startStream(playgroundElement, connectable$, 1500);
+
+			connectable$.connect();
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description big">
+		<p>multicast(new Rx.Subject()) -> <strong>publish()</strong></p>
+		<p>multicast(new Rx.BehaviorSubject(value)) -> <strong>publishBehavior(value)</strong></p>
+		<p>multicast(new Rx.ReplaySubject(buffer)) -> <strong>publishReplay(buffer)</strong></p>
+		<p>multicast(new Rx.AsyncSubject()) -> <strong>publishLast()</strong></p>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description">
+		<p>Запустить получивщийся Observable нужно вызовом <strong>connect</strong>.</p>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const connectable$ = Rx.Observable.interval(500)</code>
+				<code>   .take(5)</code>
+				<code>   .map(() => Math.random().toString().substr(2, 3))</code>
+				<code>   .publish();</code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 500);</code>
+				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 1000);</code>
+				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 1500);</code>
+				<code><mark>connectable$.connect();</mark></code>
+
+		</pre>
+		</small>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description big">
+		<p>Запустить получивщийся Observable нужно вызовом <strong>connect</strong>.</p>
+		<div class="playground" id="step8_1"></div>
+		<button class="btn btn-play" onclick="run(step8_1, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const connectable$ = Rx.Observable.interval(500)</code>
+				<code>   .take(5)</code>
+				<code>   .map(() => Math.random().toString().substr(2, 3))</code>
+				<code>   .publish();</code>
+				<code>&nbsp;</code>
+				<code><mark>setTimeout(() => { connectable$.connect(); }, 800);</mark></code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => { connectable$.subscribe(/* ... */); }, 500);</code>
+				<code>setTimeout(() => { connectable$.subscribe(/* ... */); }, 1000);</code>
+				<code>setTimeout(() => { connectable$.subscribe(/* ... */); }, 1500);</code>
+		</pre>
+		</small>
+	</div>
+	<script>
+		function step8_1() {
+			const playgroundElement = document.getElementById('step8_1');
+			playgroundElement.innerHTML = '';
+
+			const connectable$ = Rx.Observable.interval(TICK_MS)
+				.take(5)
+				.map(() => Math.random().toString().substr(2, 3))
+				.multicast(new Rx.Subject());
+
+			setTimeout(() => {
+				connectable$.connect();
+			}, 800);
+
+			startStream(playgroundElement, connectable$, 500);
+			startStream(playgroundElement, connectable$, 1000);
+			startStream(playgroundElement, connectable$, 1500);
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description">
+		<p>Что не так с этим кодом?</p>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const connectable$ = Rx.Observable.interval(500)</code>
+				<code>   .take(5)</code>
+				<code>   .map(() => Math.random().toString().substr(2, 3))</code>
+				<code>   .publish();</code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => { connectable$.connect(); }, 1000);</code>
+		</pre>
+		</small>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description big">
+		<p>Используйте <strong>refCount</strong> для автоматического обновления подписки.</p>
+		<p><strong>0 -> 1</strong> — старт генерации значений</p>
+		<p><strong>1 -> 0</strong> — отмена</p>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.interval(TICK_MS)</code>
+				<code>   .take(5)</code>
+				<code>   .publish()</code>
+				<code>   <mark>.refCount();</mark></code>
+		</pre>
+		</small>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description big">
+		<p>Используйте <strong>refCount</strong> для автоматического обновления подписки.</p>
+		<div class="playground" id="step9"></div>
+		<button class="btn btn-play" onclick="run(step9, this)">▶</button>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.interval(TICK_MS)</code>
+				<code>   .take(5)</code>
+				<code>   .publish()</code>
+				<code>   <mark>.refCount();</mark></code>
+				<code>const subscription1 = stream$.subscribe();</code>
+				<code>let subscription2;</code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => {subscription2 = stream$.subscribe(); }, 1100);</code>
+				<code>setTimeout(() => {subscription1.unsubscribe()}, 1100);</code>
+				<code>setTimeout(() => {subscription2.unsubscribe()}, 2100);</code>
+				<code>setTimeout(() => {stream$.subscribe()}, 2100);</code>
+
+		</pre>
+		</small>
+	</div>
+	<script>
+		function step9() {
+			const playgroundElement = document.getElementById('step9');
+			playgroundElement.innerHTML = '';
+
+			const stream$ = Rx.Observable.interval(TICK_MS)
+				.take(5)
+				.publish()
+				.refCount();
+
+			const subscription1 = startStream(playgroundElement, stream$);
+			const subscription2 = startStream(playgroundElement, stream$, 1000);
+			setTimeout(() => {
+				subscription1.unsubscribe()
+			}, 1100);
+			setTimeout(() => {
+				subscription2.unsubscribe()
+			}, 2100);
+
+			startStream(playgroundElement, stream$, 2500);
+		}
+	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description big">
+		<p>publish().refCount() -> <strong>share()</strong></p>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.interval(TICK_MS)</code>
+				<code>   .take(5)</code>
+				<code class="text-muted">   // .publish()</code>
+				<code class="text-muted">   // .refCount();</code>
+				<code>   .share();</code>
+		</pre>
+		</small>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="shout">Примеры</h2>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Примеры</h2>
+	<ol>
+		<li>unsubscribe</li>
+		<li class="next">share</li>
+		<li class="next">кеширование</li>
+		<li class="next">инкапсуляция сабджекта</li>
+		<li class="next">моки для юнит-тестов</li>
+	</ol>
+</section>
+
+<section class="slide">
+	<h2 class="shout">&nbsp;</h2>
+</section>
+<!-- 214iou3245iouy398y53495p49u5piuo4yipu5y341pui5h41piu3h5yipu314y5pi143h5ipu31-->
+
+<!-- <section class="slide">
+	<h2 class="slide-header">Пример</h2>
+	<div class="two-columns">
+		<div class="playground" id="step1"></div>
+		<div>
+			<h2>Константин Констрантинопольский</h2>
+			<p>Разработчик</p>
+		</div>
+	</div>
+</section>
+
 
 <section class="slide">
 	<h2 class="slide-header">Об авторе</h2>
@@ -191,7 +1277,7 @@
 </section>
 
 <section class="slide">
-	<h2 class="shout shrink">Дальше действовать будем мы</h2>
+	<h2 class="shout">Дальше действовать будем мы</h2>
 </section>
 
 <section class="slide">
@@ -225,6 +1311,7 @@
 		}
 	</style>
 </section>
+-->
 
 <footer class="badge">
 	<a href="https://github.com/shower/shower">Fork me on GitHub</a>
@@ -233,7 +1320,8 @@
 <div class="progress"></div>
 
 <script src="node_modules/shower-core/shower.min.js"></script>
-<!-- Copyright © 2017 Yours Truly, Famous Inc. -->
-
+<script src="node_modules/rxjs/bundles/Rx.min.js"></script>
+<script src="custom/scripts.js"></script>
+<!-- Copyright © 2018 Andrey Alexeev -->
 </body>
 </html>

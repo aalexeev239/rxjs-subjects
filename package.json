@@ -7,6 +7,7 @@
     "url": "http://aalexeev.ru"
   },
   "dependencies": {
+    "rxjs": "^5.5.6",
     "shower-core": "^2.1.0",
     "tinkoff-shower": "git+git@github.com:lekzd/tinkoff-shower.git"
   },

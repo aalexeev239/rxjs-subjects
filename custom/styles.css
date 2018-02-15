@@ -1,0 +1,190 @@
+.shower {
+	font-size: 20px;
+}
+
+.slide .shout {
+	font-size: 100px;
+}
+
+.slide small {
+	margin-top: 10px;
+	display: block;
+	font-size: 14px;
+}
+
+.slide p {
+	font-size: 18px;
+	margin: 0;
+}
+
+.slide .slide-header {
+	margin-bottom: 30px;
+}
+
+.slide-description {
+	min-height: 70px;
+	position: relative;
+	padding-right: 35px;
+}
+
+.slide-description.big {
+	min-height: 175px;
+}
+
+.intro {
+	text-align: center;
+}
+
+.playground {
+	padding: 10px 0;
+	min-height: 10px;
+}
+
+.text-hot {
+	color: #C0504D;
+}
+
+.text-cold {
+	color: #4F81BD;
+}
+
+.text-muted {
+	color: #777;
+}
+
+.relative-container {
+	position: relative;
+}
+
+.relative-image {
+	position: absolute;
+	box-shadow: 0 0 0 2px #434343;
+}
+
+.code-special {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 11px;
+	padding: 10px;
+	padding-left: 35px;
+	padding-bottom: 0;
+	border: 1px solid #787878;
+	opacity: .7;
+}
+
+.btn {
+	font-size: 20px;
+	padding: .3em .7em;
+	background: #ffcf0f;
+	color: #000000;
+	border: none;
+	cursor: pointer;
+	transition: background .2s, box-shadow .2s;
+}
+
+.btn:hover {
+	background: #f5c400;
+}
+
+.btn:active {
+	background: #dbaf00;
+	box-shadow: inset 0 0 .1em rgba(0, 0, 0, 0.5);
+}
+
+.btn:focus {
+	outline: none;
+}
+
+.btn[disabled] {
+	background: #c29b00;
+	opacity: .7;
+	cursor: default;
+}
+
+.btn.hidden {
+	display: none;
+}
+
+.btn-play {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.timeline {
+	color: red;
+	margin: 15px 0;
+	height: 4px;
+	background-color: currentColor;
+	position: relative;
+	z-index: 0;
+	transition: width linear 6s;
+	width: 0;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.button {
+	margin: 20px 0;
+	display: inline-block;
+	padding: 8px 16px;
+	min-width: 120px;
+	color: #009D91;
+	border: 4px solid;
+	font-size: 20px;
+	font-weight: bold;
+	text-transform: uppercase;
+	border-radius: 8px;
+}
+
+.button:active {
+	color: #FB000D;
+}
+
+.button:focus {
+	outline: none;
+}
+
+.button .button-text,
+.button:active .button-text-active {
+	display: inline;
+}
+
+.button .button-text-active,
+.button:active .button-text {
+	display: none;
+}
+
+.timeline + .timeline {
+	margin-top: 40px;
+}
+
+.entry {
+	background-color: #ffffff;
+	position: absolute;
+	top: -14px;
+	margin-left: -12px;
+	left: 0;
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	font-size: 13px;
+	box-sizing: border-box;
+	box-shadow: 0 0 0 2px currentColor;
+	text-align: center;
+	border-radius: 50%;
+	z-index: 1;
+}
+
+.entry.shift {
+	top: -6px;
+	z-index: 2;
+	background: rgba(255, 255, 255, 0.6);
+}
+
