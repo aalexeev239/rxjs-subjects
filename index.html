@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Shower Presentation Engine</title>
+	<title>RxJS</title>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,82 +23,38 @@
 </header>
 
 <section class="slide invert" id="cover">
-	<img class="cover top" src="pictures/cover.jpg" alt="Hands on the orange typewriter in a park">
+	<div class="intro">
+		<img width="300" class="intro-img" src="pictures/rxjs-logo.png" alt="RxJS">
+	</div>
 	<div class="cover-title">
 		<h2>RxJS Subjects</h2>
 	</div>
 </section>
 
 <section class="slide">
+	<h2 class="slide-header">Об авторе</h2>
+	<div class="two-columns">
+		<div>
+			<img src="pictures/author.png" width="100%" alt="">
+		</div>
+		<div>
+			<h2>Андрей Алексеев</h2>
+			<p>Разрабатываю в <a href="https://www.tinkoff.ru/business/" target="_blank" rel="noopener noreferrer">tinkoff.ru/business</a>
+			</p>
+			<p>Преподаю в <a href="https://fintech.tinkoff.ru/" target="_blank" rel="noopener noreferrer">Tinkoff
+				Fintech
+				School</a></p>
+			<p>Не пишу в твиттер <a href="https://twitter.com/aalexeev_ru" target="_blank" rel="noopener noreferrer">aalexeev_ru</a>
+			</p>
+		</div>
+	</div>
+</section>
+
+
+<section class="slide">
 	<h2 class="slide-header">Observable</h2>
 	<div class="slide-description">
 		<p>Observable – наблюдаемая сущность, доставляет изменения подписчикам.</p>
-	</div>
-	<small>
-		<pre>
-				<code>const <mark>stream$</mark> = Rx.Observable.create((observer) => {</code>
-				<code>    observer.next(1);</code>
-				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
-				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
-				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
-				<code>});</code>
-				<code>&nbsp;</code>
-				<code>const subscribtion = <mark>stream$</mark>.subscribe({</code>
-				<code>    next: (v) => logger.textContent += ' ' + v,</code>
-				<code>    complete: () => logger.textContent += ' complete!'</code>
-				<code>});</code>
-		</pre>
-	</small>
-</section>
-
-<section class="slide">
-	<h2 class="slide-header">Observable</h2>
-	<div class="slide-description">
-		<p>Observer – наблюдатель. Функция создания определяет, как он будет получать значения.</p>
-	</div>
-	<small>
-		<pre>
-			<code>const stream$ = Rx.Observable.create((<mark>observer</mark>) => {</code>
-			<code>    <mark>observer</mark>.next(1);</code>
-			<code>    setTimeout(() => { <mark>observer</mark>.next(2);},    1000);</code>
-			<code>    setTimeout(() => { <mark>observer</mark>.next(3);},    2000);</code>
-			<code>    setTimeout(() => { <mark>observer</mark>.complete();}, 3000);</code>
-				<code>});</code>
-				<code>&nbsp;</code>
-				<code>const subscribtion = stream$.subscribe({</code>
-			<code>    <mark>next: (v) => logger.textContent += ' ' + v,</mark></code>
-			<code>    <mark>complete: () => logger.textContent += ' complete!'</mark></code>
-				<code>});</code>
-		</pre>
-	</small>
-</section>
-
-<section class="slide">
-	<h2 class="slide-header">Observable</h2>
-	<div class="slide-description">
-		<p>Subscribtion – объект подписки.</p>
-	</div>
-	<small>
-		<pre>
-				<code>const stream$ = Rx.Observable.create((observer) => {</code>
-				<code>    observer.next(1);</code>
-				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
-				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
-				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
-				<code>});</code>
-				<code>&nbsp;</code>
-			<code>const <mark>subscribtion</mark> = stream$.subscribe({</code>
-				<code>    next: (v) => logger.textContent += ' ' + v,</code>
-				<code>    complete: () => logger.textContent += ' complete!'</code>
-				<code>});</code>
-		</pre>
-	</small>
-</section>
-
-<section class="slide">
-	<h2 class="slide-header">Observable</h2>
-	<div class="slide-description">
-		<p>Пример</p>
 		<div class="playground" id="step1"></div>
 		<p class="logger" style="margin-top: 10px"></p>
 		<button class="btn btn-play" onclick="run(step1, this)">▶</button>
@@ -146,6 +102,108 @@
 			});
 		}
 	</script>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>
+			<mark>Observable</mark>
+			– наблюдаемая сущность, доставляет изменения подписчикам.
+		</p>
+	</div>
+	<small>
+		<pre>
+				<code>const <mark>stream$</mark> = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = <mark>stream$</mark>.subscribe({</code>
+				<code>    next: (v) => logger.textContent += ' ' + v,</code>
+				<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>Функция создания определяет, наблюдатели (подписчики) будет получать значения.</p>
+	</div>
+	<small>
+		<pre>
+			<code>const stream$ = Rx.Observable.create((<mark>observer</mark>) => {</code>
+			<code>    <mark>observer</mark>.next(1);</code>
+			<code>    setTimeout(() => { <mark>observer</mark>.next(2);},    1000);</code>
+			<code>    setTimeout(() => { <mark>observer</mark>.next(3);},    2000);</code>
+			<code>    setTimeout(() => { <mark>observer</mark>.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = stream$.subscribe({</code>
+			<code>    next: (v) => logger.textContent += ' ' + v,</code>
+			<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>
+			<mark>Observer</mark>
+			– сам наблюдатель, состоящий из функций-обработчиков next/error/complete
+		</p>
+		<p>Их можно перечислить через запятую или задать как объект.</p>
+	</div>
+	<small>
+		<pre>
+			<code>const stream$ = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+				<code>const subscribtion = stream$.subscribe({</code>
+			<code>    <mark>next: (v) => logger.textContent += ' ' + v,</mark></code>
+			<code>    <mark>complete: () => logger.textContent += ' complete!'</mark></code>
+				<code>});</code>
+		</pre>
+	</small>
+</section>
+
+
+<section class="slide">
+	<h2 class="slide-header">Observable</h2>
+	<div class="slide-description">
+		<p>
+			<mark>Subscribtion</mark>
+			– подписка. Обычно используется для вызова
+			<mark>unsubscribe</mark>
+			.
+		</p>
+	</div>
+	<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.create((observer) => {</code>
+				<code>    observer.next(1);</code>
+				<code>    setTimeout(() => { observer.next(2);},    1000);</code>
+				<code>    setTimeout(() => { observer.next(3);},    2000);</code>
+				<code>    setTimeout(() => { observer.complete();}, 3000);</code>
+				<code>});</code>
+				<code>&nbsp;</code>
+			<code>const <mark>subscribtion</mark> = stream$.subscribe({</code>
+				<code>    next: (v) => logger.textContent += ' ' + v,</code>
+				<code>    complete: () => logger.textContent += ' complete!'</code>
+				<code>});</code>
+			<code><mark>subscribtion.unsubscribe();</mark></code>
+		</pre>
+	</small>
 </section>
 
 <section class="slide">
@@ -292,7 +350,7 @@
 				<code> .subscribe(v => console.log(v));</code>
 		</pre>
 		</small>
-		<img class="relative-image" style="width: 380px; right: 0px; bottom: -60px;" src="pictures/2requests.png"
+		<img class="relative-image" style="width: 380px; right: 0px; top: 25px;" src="pictures/2requests.png"
 			 alt="2 requests">
 	</div>
 </section>
@@ -409,13 +467,13 @@
 		<div class="code-special">
 			<pre>
 					<code>function setSubjectTick(subject) {</code>
-				<code>    subject.<mark>next(0)</mark>;</code>
-				<code>    setTimeout(() => subject.<mark>next(1)</mark>, 500);</code>
-				<code>    setTimeout(() => subject.<mark>next(2)</mark>, 1000);</code>
-				<code>    setTimeout(() => subject.<mark>next(3)</mark>, 1500);</code>
-				<code>    setTimeout(() => subject.<mark>next(4)</mark>, 2000);</code>
-				<code>    setTimeout(() => subject.<mark>next(5)</mark>, 2500);</code>
-					<code>    setTimeout(() => subject.complete(), 3000);</code>
+				<code>    <mark>subject.next(0)</mark>;</code>
+				<code>    setTimeout(() => <mark>subject.next(1)</mark>, 500);</code>
+				<code>    setTimeout(() => <mark>subject.next(2)</mark>, 1000);</code>
+				<code>    setTimeout(() => <mark>subject.next(3)</mark>, 1500);</code>
+				<code>    setTimeout(() => <mark>subject.next(4)</mark>, 2000);</code>
+				<code>    setTimeout(() => <mark>subject.next(5)</mark>, 2500);</code>
+				<code>    setTimeout(() => <mark>subject.complete()</mark>, 3000);</code>
 					<code>}</code>
 
 			</pre>
@@ -425,15 +483,12 @@
 
 <section class="slide">
 	<h2 class="slide-header">Subject</h2>
-	<div class="slide-description big">
-		<p>Пример:</p>
-		<p>Я рассказываю этот доклад, я — Subject.</p>
-		<p>Произношу какую-то мысль — передаю значение через .next</p>
-		<p>Вы меня слушаете, вы подписчики. Вы получаете данные через subscribe().</p>
+	<div class="slide-description">
+		<p>Пример</p>
 	</div>
 	<small>
 		<pre>
-				<code>const aalexeev = new Subject();</code>
+				<code><mark>const aalexeev = new Subject();</mark></code>
 				<code>&nbsp;</code>
 				<code>for (let i = 0; i < meetupListeners; i++) {</code>
 				<code>   meetupListeners[i] = aalexeev.subscribe(/* ... */);</code>
@@ -447,16 +502,53 @@
 
 <section class="slide">
 	<h2 class="slide-header">Subject</h2>
-	<div class="slide-description big">
-		<p>Если кто-то опоздал и пришел только сейчас, он не получит все прошлые значения.</p>
-		<p>Но будет получать все будущие.</p>
+	<div class="slide-description">
+		<p>Пример</p>
+	</div>
+	<small>
+		<pre>
+				<code>const aalexeev = new Subject();</code>
+				<code>&nbsp;</code>
+			<code><mark>for (let i = 0; i < meetupListeners; i++) {</mark></code>
+			<code><mark>   meetupListeners[i] = aalexeev.subscribe(/* ... */);</mark></code>
+			<code><mark>}</mark></code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Я рассказываю этот доклад');</code>
+				<code>aalexeev.next('Произношу какую-то мысль — передаю значение через .next');</code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description">
+		<p>Пример</p>
+	</div>
+	<small>
+		<pre>
+				<code>const aalexeev = new Subject();</code>
+				<code>&nbsp;</code>
+				<code>for (let i = 0; i < meetupListeners; i++) {</code>
+				<code>   meetupListeners[i] = aalexeev.subscribe(/* ... */);</code>
+				<code>}</code>
+				<code>&nbsp;</code>
+			<code><mark>aalexeev.next('Я рассказываю этот доклад');</mark></code>
+			<code><mark>aalexeev.next('Произношу какую-то мысль — передаю значение через .next');</mark></code>
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description">
+		<p>Пример</p>
 	</div>
 	<small>
 		<pre>
 				<code>aalexeev.next('Если кто-то опоздал и пришел только сейчас');</code>
 				<code>aalexeev.next('он не получит все прошлые значения');</code>
 				<code>&nbsp;</code>
-				<code>const newListener = aalexeev.subscribe(/* ... */);</code>
+			<code><mark>const newListener = aalexeev.subscribe(/* ... */);</mark></code>
 				<code>meetupListeners.push(newListener);</code>
 				<code>&nbsp;</code>
 				<code>aalexeev.next('но будет получать все будущие');</code>
@@ -466,9 +558,25 @@
 
 <section class="slide">
 	<h2 class="slide-header">Subject</h2>
-	<div class="slide-description big">
-		<p>При ошибке или завершении доклада подписки завершаются.</p>
-		<p>Больше значения по next не обрабатываются.</p>
+	<div class="slide-description">
+		<p>Пример</p>
+	</div>
+	<small>
+		<pre>
+				<code>const leaving = Math.floor(Math.random() * meetupListeners); // кто-то</code>
+				<code><mark>meetupListeners[leaving].unsubscribe();</mark></code>
+				<code>meetupListeners.splice(leaving, 1);</code>
+				<code>&nbsp;</code>
+				<code>aalexeev.next('Кто только что ушел, не услышит самого главного');</code>
+
+		</pre>
+	</small>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Subject</h2>
+	<div class="slide-description">
+		<p>Пример</p>
 	</div>
 	<small>
 		<pre>
@@ -544,17 +652,15 @@
 <section class="slide">
 	<h2 class="slide-header">Behaviour Subject</h2>
 	<div class="slide-description big">
-		<p>Вы вошли на полуфразе, и в обычном случае вы ее не услышите. Но ваш замечательный сосед подсказал, о чем идет
-			речь, и вы все поняли.</p>
-		<p>В Behaviour Subject всегда хранится текущее значение, начиная с момента инициализации. При подписке
-			наблюдатель незамедлительно получает текущее значение.</p>
+		<p>Всегда хранит текущее значение. При инициализации требует начальное значение.</p>
+		<p>При подписке наблюдатель незамедлительно получит текущее значение.</p>
 		<div class="playground" id="step6_1"></div>
 		<button class="btn btn-play" onclick="run(step6_1, this)">▶</button>
 	</div>
 	<div class="relative-container">
 		<small>
 		<pre>
-				<code>const subject = new Rx.BehaviorSubject('a');</code>
+				<code>const subject = new Rx.BehaviorSubject('abc');</code>
 				<code>const subscribtion = subject.subscribe(/* ... */);</code>
 				<code>setSubjectTick(subject);</code>
 				<code>&nbsp;</code>
@@ -580,7 +686,7 @@
 			const playgroundElement = document.getElementById('step6_1');
 			playgroundElement.innerHTML = '';
 
-			const subject = new Rx.BehaviorSubject('a');
+			const subject = new Rx.BehaviorSubject('abc');
 
 			setSubjectTick2(subject);
 
@@ -598,17 +704,16 @@
 <section class="slide">
 	<h2 class="slide-header">Replay Subject</h2>
 	<div class="slide-description big">
-		<p>Вы опоздали на доклад, но хотите прослушать все с самого начала. Ваш доблестный сосед шепотом пересказывает
-			вам доклад.</p>
-		<p>Replay Subject сохраняет буфер произошедших событий, и подписчик получает весь буфер и следующие
-			значения.</p>
+		<p>Cохраняет буфер произошедших событий.</p>
+		<p>При подписке наблюдатель незамедлительно получит текущий буфер.</p>
+		<p>Нет начального значения, как в Behaviour.</p>
 		<div class="playground" id="step6_2"></div>
 		<button class="btn btn-play" onclick="run(step6_2, this)">▶</button>
 	</div>
 	<div class="relative-container">
 		<small>
 		<pre>
-				<code>const subject = new Rx.ReplaySubject(1);</code>
+				<code>const subject = new Rx.ReplaySubject(2);</code>
 				<code>setSubjectTick(subject);</code>
 				<code>&nbsp;</code>
 				<code>subject.subscribe();</code>
@@ -622,6 +727,7 @@
 		<div class="code-special">
 			<pre>
 					<code>function setSubjectTick(subject) {</code>
+					<code>    subject.next(1)</code>
 					<code>    setTimeout(() => subject.next(1), 500);</code>
 					<code>    setTimeout(() => subject.next(2), 1000);</code>
 					<code>    setTimeout(() => subject.next(3), 1500);</code>
@@ -637,9 +743,9 @@
 			const playgroundElement = document.getElementById('step6_2');
 			playgroundElement.innerHTML = '';
 
-			const subject = new Rx.ReplaySubject(1);
+			const subject = new Rx.ReplaySubject(2);
 
-			setSubjectTick2(subject);
+			setSubjectTick1(subject);
 
 			startStream(playgroundElement, subject.asObservable());
 
@@ -651,10 +757,8 @@
 <section class="slide">
 	<h2 class="slide-header">Async Subject</h2>
 	<div class="slide-description big">
-		<p>Всю лекцию вы просидели в инстаграмме, а когда подняли голову — я сказал последнюю мысль и закончил доклад.
-			Поздравляю, это Async Subject.</p>
-		<p>Ничего, вы хотя бы получите слайды.</p>
-		<p>Async Subject передает последнее значение и только после завершения.</p>
+		<p>Передает только последнее значение и только после завершения.</p>
+		<p>Похож на Promise.</p>
 		<div class="playground" id="step6_3"></div>
 		<button class="btn btn-play" onclick="run(step6_3, this)">▶</button>
 	</div>
@@ -701,11 +805,17 @@
 </section>
 
 <section class="slide">
-	<h2 class="shout">MULTICASTING</h2>
+	<h2 class="slide-header">Итого</h2>
+	<ol>
+		<li>Subject</li>
+		<li class="next">BehaviorSubject(value)</li>
+		<li class="next">ReplaySubject(buffer)</li>
+		<li class="next">AsyncSubject()</li>
+	</ol>
 </section>
 
 <section class="slide">
-	<h2 class="slide-header">Multicasting</h2>
+	<h2 class="slide-header">Subject</h2>
 	<div class="slide-description big">
 		<p>Вернемся к задаче разделения значений между несколькими подписчиками.</p>
 		<p>С помощью Subject-ов это можно решить вот так:</p>
@@ -750,7 +860,6 @@
 	<div class="slide-description big">
 		<p>Оператор <strong>multicast</strong> позволяет не выделять промежуточный Subject, а создать сразу “правильный”
 			Observable.</p>
-		<p>Запустить такой Observable нужно вызовом <strong>connect</strong>, иначе ничего не сработает.</p>
 		<div class="playground" id="step8"></div>
 		<button class="btn btn-play" onclick="run(step8, this)">▶</button>
 	</div>
@@ -765,7 +874,7 @@
 				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 500);</code>
 				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 1000);</code>
 				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 1500);</code>
-				<code><mark>connectable$.connect();</mark></code>
+				<code>connectable$.connect();</code>
 
 		</pre>
 		</small>
@@ -792,8 +901,6 @@
 <section class="slide">
 	<h2 class="slide-header">Multicasting</h2>
 	<div class="slide-description big">
-		<p>Для удобства существуют сокращения:</p>
-		<br>
 		<p>multicast(new Rx.Subject()) -> <strong>publish()</strong></p>
 		<p>multicast(new Rx.BehaviorSubject(value)) -> <strong>publishBehavior(value)</strong></p>
 		<p>multicast(new Rx.ReplaySubject(buffer)) -> <strong>publishReplay(buffer)</strong></p>
@@ -803,8 +910,31 @@
 
 <section class="slide">
 	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description">
+		<p>Запустить получивщийся Observable нужно вызовом <strong>connect</strong>.</p>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const connectable$ = Rx.Observable.interval(500)</code>
+				<code>   .take(5)</code>
+				<code>   .map(() => Math.random().toString().substr(2, 3))</code>
+				<code>   .publish();</code>
+				<code>&nbsp;</code>
+				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 500);</code>
+				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 1000);</code>
+				<code>setTimeout(() => {connectable$.subscribe(/* ... */);}, 1500);</code>
+				<code><mark>connectable$.connect();</mark></code>
+
+		</pre>
+		</small>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
 	<div class="slide-description big">
-		<p>Старт подписки напрямую зависит от connect, т.е. задается вручную.</p>
+		<p>Запустить получивщийся Observable нужно вызовом <strong>connect</strong>.</p>
 		<div class="playground" id="step8_1"></div>
 		<button class="btn btn-play" onclick="run(step8_1, this)">▶</button>
 	</div>
@@ -816,7 +946,7 @@
 				<code>   .map(() => Math.random().toString().substr(2, 3))</code>
 				<code>   .publish();</code>
 				<code>&nbsp;</code>
-				<code>setTimeout(() => { connectable$.connect(); }, 1000);</code>
+				<code><mark>setTimeout(() => { connectable$.connect(); }, 800);</mark></code>
 				<code>&nbsp;</code>
 				<code>setTimeout(() => { connectable$.subscribe(/* ... */); }, 500);</code>
 				<code>setTimeout(() => { connectable$.subscribe(/* ... */); }, 1000);</code>
@@ -836,7 +966,7 @@
 
 			setTimeout(() => {
 				connectable$.connect();
-			}, 1000);
+			}, 800);
 
 			startStream(playgroundElement, connectable$, 500);
 			startStream(playgroundElement, connectable$, 1000);
@@ -847,9 +977,8 @@
 
 <section class="slide">
 	<h2 class="slide-header">Multicasting</h2>
-	<div class="slide-description big">
-		<p>Старт подписки напрямую зависит от connect, т.е. задается вручную.</p>
-		<p>Аналогично вручную надо задать окончание генерации значений.</p>
+	<div class="slide-description">
+		<p>Что не так с этим кодом?</p>
 	</div>
 	<div class="relative-container">
 		<small>
@@ -860,10 +989,25 @@
 				<code>   .publish();</code>
 				<code>&nbsp;</code>
 				<code>setTimeout(() => { connectable$.connect(); }, 1000);</code>
-				<code>&nbsp;</code>
-				<code>setTimeout(() => { connectable$.subscribe(/* ... */); }, 500);</code>
-				<code>setTimeout(() => { connectable$.subscribe(/* ... */); }, 1000);</code>
-				<code>setTimeout(() => { connectable$.subscribe(/* ... */); }, 1500);</code>
+		</pre>
+		</small>
+	</div>
+</section>
+
+<section class="slide">
+	<h2 class="slide-header">Multicasting</h2>
+	<div class="slide-description big">
+		<p>Используйте <strong>refCount</strong> для автоматического обновления подписки.</p>
+		<p><strong>0 -> 1</strong> — старт генерации значений</p>
+		<p><strong>1 -> 0</strong> — отмена</p>
+	</div>
+	<div class="relative-container">
+		<small>
+		<pre>
+				<code>const stream$ = Rx.Observable.interval(TICK_MS)</code>
+				<code>   .take(5)</code>
+				<code>   .publish()</code>
+				<code>   <mark>.refCount();</mark></code>
 		</pre>
 		</small>
 	</div>
@@ -882,7 +1026,7 @@
 				<code>const stream$ = Rx.Observable.interval(TICK_MS)</code>
 				<code>   .take(5)</code>
 				<code>   .publish()</code>
-				<code>   .refCount();</code>
+				<code>   <mark>.refCount();</mark></code>
 				<code>const subscription1 = stream$.subscribe();</code>
 				<code>let subscription2;</code>
 				<code>&nbsp;</code>
@@ -921,25 +1065,6 @@
 <section class="slide">
 	<h2 class="slide-header">Multicasting</h2>
 	<div class="slide-description big">
-		<p>Используйте <strong>refCount</strong> для автоматического обновления подписки.</p>
-		<p><strong>0 -> 1</strong> — старт генерации значений</p>
-		<p><strong>1 -> 0</strong> — отмена</p>
-	</div>
-	<div class="relative-container">
-		<small>
-		<pre>
-				<code>const stream$ = Rx.Observable.interval(TICK_MS)</code>
-				<code>   .take(5)</code>
-				<code>   .publish()</code>
-				<code>   .refCount();</code>
-		</pre>
-		</small>
-	</div>
-</section>
-
-<section class="slide">
-	<h2 class="slide-header">Multicasting</h2>
-	<div class="slide-description big">
 		<p>publish().refCount() -> <strong>share()</strong></p>
 	</div>
 	<div class="relative-container">
@@ -956,7 +1081,7 @@
 </section>
 
 <section class="slide">
-	<h2 class="shout">&nbsp;</h2>
+	<h2 class="shout">Примеры</h2>
 </section>
 
 <section class="slide">
@@ -982,36 +1107,7 @@
 		<div>
 			<h2>Константин Констрантинопольский</h2>
 			<p>Разработчик</p>
-			<button class="btn" onclick="run(step1, this)">start</button>
 		</div>
-
-		<script>
-			const playgroundElement = document.getElementById('step1');
-
-			function step1() {
-				playgroundElement.innerHTML = '';
-
-				const stream$ = Rx.Observable.create((observer) => {
-					observer.next(1);
-					setTimeout(() => {
-						observer.next(2);
-					}, 1000);
-					setTimeout(() => {
-						observer.next(3);
-					}, 2000);
-					setTimeout(() => {
-						observer.complete()
-					}, 3000);
-				});
-
-				startStream(playgroundElement, stream$);
-
-				// const subscribtion = stream$.subscribe({
-				// 	next: (v) => logger.textContent += ' ' + v,
-				// 	complete: () => logger.textContent += ' complete!'
-				// });
-			}
-		</script>
 	</div>
 </section>
 

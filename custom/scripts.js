@@ -36,7 +36,20 @@ function renderNext(value, timelineElement) {
 	const newElement = createEntryElement();
 
 	newElement.textContent = value;
-	newElement.style.left = getTimeDiff() * STEP + 'px';
+
+	const offset = getTimeDiff() * STEP;
+
+	newElement.style.left = offset + 'px';
+
+	const last = timelineElement.lastElementChild;
+
+	if (last) {
+		const lastOffset = parseInt(last.style.left, 10);
+
+		if (offset - lastOffset < 5) {
+			newElement.classList.add('shift');
+		}
+	}
 
 	timelineElement.appendChild(newElement);
 }

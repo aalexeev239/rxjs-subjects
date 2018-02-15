@@ -3,7 +3,7 @@
 }
 
 .slide .shout {
-	font-size: 120px;
+	font-size: 100px;
 }
 
 .slide small {
@@ -29,6 +29,10 @@
 
 .slide-description.big {
 	min-height: 175px;
+}
+
+.intro {
+	text-align: center;
 }
 
 .playground {
@@ -176,5 +180,11 @@
 	text-align: center;
 	border-radius: 50%;
 	z-index: 1;
+}
+
+.entry.shift {
+	top: -6px;
+	z-index: 2;
+	background: rgba(255, 255, 255, 0.6);
 }
 
