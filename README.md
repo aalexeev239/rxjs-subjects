@@ -5,13 +5,13 @@
 Анкета на 5 минут: [https://goo.gl/forms/kkG0QSOviO6yOvRn1](https://goo.gl/forms/kkG0QSOviO6yOvRn1)
 
  
-
 ## Материалы
 
-1. Презентация [https://aalexeev239.github.io/rxjs-subjects/](https://aalexeev239.github.io/rxjs-subjects/)
-2. Пример кода [https://github.com/aalexeev239/rxjs-subjects-example](https://github.com/aalexeev239/rxjs-subjects-example)
+1. [Видео](https://youtu.be/KFV7IgCU68Q?t=4m20s)
+2. Презентация [https://aalexeev239.github.io/rxjs-subjects/](https://aalexeev239.github.io/rxjs-subjects/)
+3. Пример кода [https://github.com/aalexeev239/rxjs-subjects-example](https://github.com/aalexeev239/rxjs-subjects-example)
 
-## Cсылки [Work In Progress]
+## Cсылки
 
 ### Observable
 
